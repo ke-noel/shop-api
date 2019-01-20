@@ -8,15 +8,15 @@ This is a RESTful API for a very basic online marketplace. It supports fetching 
 
 ## Setup
 1. Download this repository.
-2. Generate your tables.
+2. Generate your tables.<br>
 `
 $ rails db:migrate
 `
-3. Populate your products table. It uses config/seeds.rb to generate the Product instances. It's currently set up as a bookstore and generates 100 book titles (using Faker), prices and inventory_counts.
+3. Populate your products table. It uses config/seeds.rb to generate the Product instances. It's currently set up as a bookstore and generates 100 book titles (using Faker), prices and inventory_counts.<br>
 `
 $ rails db:seed
 `
-4. Start your server session.
+4. Start your server session.<br>
 `
 $ rails server
 `
@@ -29,7 +29,7 @@ For the following, I used curl, but similar services would work too. By default,
 To access the database, you will need to create a user.<br>
 `
 $ curl --header "Content-Type: application/json" --request POST --data '{"name":"<name>","password":"<password>"}' :3000/auth/register
-`
+` <br><br>
 `
 {"message":"User created successfully."}
 `
@@ -38,7 +38,7 @@ $ curl --header "Content-Type: application/json" --request POST --data '{"name":
 When you log in with your credentials, the API will generate and return a token. You'll need to pass that token with every request. Note: tokens expire after 2 hours. To change this, modify app/auth/json_web_token.rb:exp. <br>
 `
 $ curl --header "Content-Type: application/json" --request POST --data '{"name":"<name>","password":"<password>"}' :3000/auth/login
-`
+` <br><br>
 `
 {"access_token":"<token>","message":"Login successful!"}
 `
@@ -52,24 +52,28 @@ $ curl -H "Authorization: <token>" :3000/api/v1/products
 To return all items that are in stock (inventory_count > 0), enter the following instead: <br>
 `
 $ curl -H "Authorization: <token>" :3000/api/v1/products?in_stock="true"
-`
+` <br>
 To return all items that are out of stock, change the argument to "false".
 
 To return a single item by its product_id: <br>
 `
 $ curl -H "Authorization: <token>" :3000/api/v1/products/:id
-`
+` <br><br>
 `
 $ curl -H "Authorization: <token>" :3000/api/v1/products/1
+` <br>
+`
 {"message":{"id":1,"title":"Dance Dance Dance","price":5.94,"inventory_count":13,"created_at":"2019-01-20T17:25:59.873Z","updated_at":"2019-01-20T17:25:59.873Z"}}
 `
 
 Purchasing an item lowers the inventory_count by 1 and will return an error message if the item is out of stock. To purchase an item: <br>
 `
 $ curl -H "Authorization: <token>" :3000/api/v1/products/:id/purchase
-`
+` <br><br>
 `
 $ curl -H "Authorization: <token>" :3000/api/v1/products/1/purchase
+`<br>
+`
 {"message":"Dance Dance Dance purchased for $5.94. There are 12 left in stock."}
 `
 
